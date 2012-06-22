@@ -1,0 +1,208 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.aphyr</groupId>
+  <artifactId>riemann-scala_2.9.1-client</artifactId>
+  <version>0.0.4-SNAPSHOT</version>
+
+  <name>Riemann Scala Client</name>
+  <url>http://aphyr.github.com/riemann</url>
+  <packaging>jar</packaging>
+
+  <properties>
+    <scala.version>2.9.1</scala.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.aphyr</groupId>
+      <artifactId>riemann-java-client</artifactId>
+      <version>0.0.4-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <version>2.15.2</version>
+        <executions>
+          <execution>
+            <id>cmain</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <args>
+                <arg>-make:transitive</arg>
+                <arg>-dependencyfile</arg>
+                <arg>${project.build.directory}/.main_scala_dependencies</arg>
+              </args>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ctest</id>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <args>
+                <arg>-make:transitive</arg>
+                <arg>-dependencyfile</arg>
+                <arg>${project.build.directory}/.test_scala_dependencies</arg>
+              </args>
+            </configuration>
+          </execution>
+        </executions>                
+	      <configuration>
+          <args>
+            <arg>-optimise</arg>
+            <arg>-unchecked</arg>
+            <arg>-deprecation</arg>
+          </args>
+          <charset>UTF-8</charset>
+          <scalaVersion>${scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <useFile>false</useFile>
+          <useSystemClassLoader>false</useSystemClassLoader>
+          <argLine>-Xmx1024m</argLine>
+          <argLine>-da</argLine>
+          <includes>
+            <include>**/*Spec.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/*Test.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <!-- <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+              <artifactSet>
+                <excludes>
+                  <exclude>junit:junit</exclude>
+                  <exclude>org.scala-lang:scala-library</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin> -->
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>central</id> 
+      <name>Maven repository</name> 
+      <url>http://repo1.maven.org/maven2</url> 
+    </repository>
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+    <repository>
+      <id>mketc</id>
+  	  <name>Marketcetera</name>
+  	  <url>http://repo.marketcetera.org/maven</url>
+    </repository>
+    <repository>
+      <id>jetlang</id>
+      <name>Jetlang</name>
+      <url>http://jetlang.googlecode.com/svn/repo/</url>
+    </repository>
+    <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+    <repository>
+      <id>coda-hale-repo</id>
+      <name>Coda Hale's Repo</name>
+      <url>http://repo.codahale.com/</url>
+    </repository>
+    <repository>
+      <id>boundary-public</id>
+      <name>Boundary Public</name>
+      <url>http://maven.boundary.com/artifactory/repo</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>scala-tools.org</id>
+      <name>Scala-tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>maven.boundary.com</id>
+      <name>maven.boundary.com-releases</name>
+      <url>http://maven.boundary.com/artifactory/external</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.boundary.com</id>
+      <name>maven.boundary.com-snapshots</name>
+      <url>http://maven.boundary.com/artifactory/external</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>
