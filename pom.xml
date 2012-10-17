@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.aphyr</groupId>
   <artifactId>riemann-scala_2.9.1-client</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.4</version>
 
   <name>Riemann Scala Client</name>
   <url>http://aphyr.github.com/riemann</url>
@@ -25,7 +25,7 @@
     <dependency>
       <groupId>com.aphyr</groupId>
       <artifactId>riemann-java-client</artifactId>
-      <version>0.0.4-SNAPSHOT</version>
+      <version>0.0.4</version>
     </dependency>
   </dependencies>
 
